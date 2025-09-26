@@ -15,6 +15,7 @@ const modalText = document.getElementById("modal-text")
 const playerNameInput = document.getElementById("player-name").value
 const saveScoreBtn = document.getElementById("save-score-btn")
 const scoreList = document.getElementById("score-list")
+const counterShot = document.getElementById("shot-counter")
  console.log(messageArea)
 
 
@@ -37,17 +38,24 @@ const scoreList = document.getElementById("score-list")
 // Usa un bloque 'try...catch' para manejar errores si el servidor no responde.
  try {
 // Realiza una petición 'fetch' a tu 'start_game.php'.
- const response = await fetch('start_game.php');
+
+const  responseTest = await fetch("info.json")
+
+const data = await responseTest.json()
+
+console.log(data)
+
+  // const response = await fetch('start_game.php');  usar esta al llamar al php
 // Convierte la respuesta a JSON.
- const data = await response.json();
+ // const data = await response.json();
 // Actualiza el 'gameState' con los datos recibidos del servidor.
+
  gameState.boardSize = data.boardSize;
  gameState.fleet = data.fleet;
 // Llama a las funciones que se encargan de "dibujar" la interfaz.
- renderBoard();
- renderFleetStatus();
+
 // Muestra un mensaje de inicio.
- messageArea.textContent = '...';
+ messageArea.textContent = 'Bienvenido/a al juego de undir la flota';
  } catch (error) {
     console.error("Error fetching API data:", error);
  }
@@ -86,6 +94,9 @@ const scoreList = document.getElementById("score-list")
        casilla.document.createElement("li")
    })
 }
+
+renderBoard();
+renderFleetStatus();
 // --- PASO 5: LÓGICA DE DISPARO ---
 
 // Crea la función 'handleCellClick' que se ejecuta al hacer clic en una celda.
@@ -96,6 +107,16 @@ const scoreList = document.getElementById("score-list")
  cell.dataset.fired = 'true';
 
 // Incrementa el contador de disparos y actualiza el HTML.
+
+
+const increaseCounter = (counterShot, counter = 0) => {
+   if(cell) {
+      counterShot.innerHTML = "";
+      return counterShot.innerHTML =  `<b> ${counter++} </b>`
+   }
+}
+
+cell.addEventListener ("click" , increaseCounter )
 
 // ¡OJO! Convierte las coordenadas del 'dataset' (que son string) a número usando parseInt().
  const row = parseInt(cell.dataset.row);
@@ -118,7 +139,7 @@ const scoreList = document.getElementById("score-list")
 // Si es así, llama a la función 'endGame()'.
 // Si no ha acertado ('miss')...
 // Añade la clase 'agua' a la celda.
-// }
+ 
 // --- PASO 6: FIN DEL JUEGO Y PUNTUACIONES ---
 // Crea la función 'endGame' que muestra el modal de victoria.
 
