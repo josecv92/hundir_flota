@@ -40,12 +40,21 @@
         for ($i = 0; $i < $shipInfo['size']; $i++) { 
 // Calcula la coordenada actual (row, col) basándote en la orientación. 
             if ($orientation == 0){
-                $temporaryPositions = [$startCol, $startRow];
-                //$temporaryPositions.array_push();
-                $shipInfo['positions'] = $startRow;
-            }
+                $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
+                $shipInfo['positions'].array_push($temporaryPositions);
+                $startCol++;
+            }else{
+                $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
+                $shipInfo['positions'].array_push($temporaryPositions);
+                $startRow++;
+            } 
 // COMPROBACIÓN 1: ¿La casilla está fuera del tablero?  
 // COMPROBACIÓN 2: ¿La casilla ya está en '$occupiedCoordinates'? // Si  alguna de las dos es cierta, la posición no es válida. // 
+            for ($i = 0; $i <= sizeof($occupiedCoordinates); $i++){
+                if ($shipCoordinates['positions'.'row'] )
+            
+                $occupiedCoordinates.array_push($shipInfo['positions']);
+            }
             $isValidPlacement = false;  
             break;
 // Rompe el bucle 'for' con 'break;'.  
@@ -62,7 +71,7 @@
 } // Fin del foreach  
 // PASO 9: Enviar la respuesta final.  
 // Prepara el array final de la respuesta.  
-// $response = [...];  
+//$response = [...];  
 // Conviértelo a JSON y envíalo con 'echo'.  
-// echo json_encode($response);  
+echo json_encode($response);  
 ?>
