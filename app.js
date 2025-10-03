@@ -108,7 +108,6 @@ renderFleetStatus();
 
 // Incrementa el contador de disparos y actualiza el HTML.
 
-
 const increaseCounter = (counterShot, counter = 0) => {
    if(cell) {
       counterShot.innerHTML = "";
@@ -120,30 +119,64 @@ cell.addEventListener ("click" , increaseCounter )
 
 // ¡OJO! Convierte las coordenadas del 'dataset' (que son string) a número usando parseInt().
  const row = parseInt(cell.dataset.row);
- const col = parent(cell.dataset.col)
+ const col = parseInt(cell.dataset.col)
 // Busca si el disparo ha acertado en algún barco.
 // Usa un 'forEach' o 'findIndex' en 'gameState.fleet' para comprobar si las coordenadas coinciden.
 
-gameState.fleet.forEach(() => {
-  if(e) {
-     
-  }
+gameState.fleet.forEach((boat) => {
+   boat.forEach((position) => {
+      if (position[0] !== row || position[1] !== col) {
+          position.classList.add("miss");
+      }
+  });
 })
+}
 
 // Si ha acertado ('hit')...
 // Añade la clase 'tocado' a la celda.
 // Incrementa el contador de aciertos ('hits') del barco correspondiente.
+gameState.fleet.forEach((hits)   => {
+  boat.hits = hits++
+ })
+
 // Comprueba si el barco está hundido (si 'hits' es igual a 'size').
 // Si está hundido...
+
+
 // Marca el barco como 'isSunk = true'.
 // Incrementa el contador de barcos hundidos.
 // Actualiza los estilos de todas las casillas de ese barco a 'hundido'.
+
+if(boat.hits === boat.boardSize) {
+   boat.isSunk = true;
+   shipsSunk++
+   boat.forEach((position) => {
+      if (position[0] !== row || position[1] !== col) {
+          position.classList.add("hundido");
+      }
+  });
+}
+
 // Actualiza el estilo en la lista de la flota.
+
 // Comprueba si todos los barcos han sido hundidos (fin del juego).
 // Si es así, llama a la función 'endGame()'.
 // Si no ha acertado ('miss')...
 // Añade la clase 'agua' a la celda.
- }
+
+const li = document.createElement("li")
+fleetStatus.appendChild(li)
+li.style.backgroundColor = "red"
+
+if(!boat) {
+   endGame();
+}
+
+boat.forEach((position) => {
+   if (position[0] !== row || position[1] !== col) {
+       position.classList.add("miss");
+   }
+});
 // --- PASO 6: FIN DEL JUEGO Y PUNTUACIONES ---
 
 // Crea la función 'endGame' que muestra el modal de victoria.
