@@ -26,42 +26,40 @@
         while (!$isPlaced) {  
 // PASO 6: Generar una posición y orientación aleatorias.  
 // Elige si el barco será 'horizontal' o 'vertical'.  
-        $orientation = rand(0, 1);  
+            $orientation = rand(0, 1);  
 // Elige una fila y columna de inicio aleatorias dentro del tablero. Usa rand().  
-        $startRow = rand(1, (10 - $shipInfo['size'] + 1)); 
-        $startCol = rand(1, (10 - $shipInfo['size'] + 1)); 
+            $startRow = rand(1, (10 - $shipInfo['size'] + 1)); 
+            $startCol = rand(1, (10 - $shipInfo['size'] + 1)); 
 // PASO 7: Validar la posición del barco.  
 // Prepara un array para guardar las coordenadas del barco actual. // 
-        $shipCoordinates = [];  
+            $shipCoordinates = [];  
 // Y una bandera para saber si la posición es válida.  
-        $isValidPlacement = true;  
-        echo $startCol, $startRow;
+            $isValidPlacement = true;  
+            echo $startCol, $startRow;
 // Inicia un bucle 'for' que se repita tantas veces como el tamaño del barco  ('$shipInfo['size']'). 
             
-        for ($i = 0; $i < $shipInfo['size']; $i++) { 
-            if ($orientation == 0){
-                if ($occupiedCoordinates[$startCol][$startRow+$i] == 1) $isValidPlacement = false;  
-            }else{
-                if($occupiedCoordinates[$startCol+$i][$startRow] == 1) $isValidPlacement = false; 
-            }
-        }
-        if ( $isValidPlacement){
             for ($i = 0; $i < $shipInfo['size']; $i++) { 
-                    if ($orientation == 0){
-                        $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
-                        $shipInfo['positions'].array_push($temporaryPositions);
-                        $startCol++;
-                    }else{
-                        $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
-                        $shipInfo['positions'].array_push($temporaryPositions);
-                        $startRow++;
-                    } 
-                    $occupiedCoordinates[$startCol][$startRow] = 1;
-            }  
-            $isPlaced = true;
-        }
-      
-
+                if ($orientation == 0){
+                    if ($occupiedCoordinates[$startCol][$startRow+$i] == 1) $isValidPlacement = false;  
+                }else{
+                    if($occupiedCoordinates[$startCol+$i][$startRow] == 1) $isValidPlacement = false; 
+                }
+            }
+            if ( $isValidPlacement){
+                for ($i = 0; $i < $shipInfo['size']; $i++) { 
+                        if ($orientation == 0){
+                            $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
+                            $shipInfo['positions'].array_push($temporaryPositions);
+                            $startCol++;
+                        }else{
+                            $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
+                            $shipInfo['positions'].array_push($temporaryPositions);
+                            $startRow++;
+                        } 
+                        $occupiedCoordinates[$startCol][$startRow] = 1;
+                }  
+                $isPlaced = true;
+            }
 // PASO 8: Colocar el barco si la validación fue exitosa.  
 // Si '$isValidPlacement' sigue siendo 'true'...  
 // if ($isValidPlacement) {  
@@ -69,11 +67,11 @@
 // ...crea el objeto final del barco y añádelo a '$placedShips'.  
 // ...marca el barco como colocado para salir del bucle 'while'. // $isPlaced = true;  
 // }  
- } // Fin del while  
-} // Fin del foreach  
+        } // Fin del while  
+    } // Fin del foreach  
 // PASO 9: Enviar la respuesta final.  
 // Prepara el array final de la respuesta.  
-//$response = [...];  
+    $response = $fleetDefinition;  
 // Conviértelo a JSON y envíalo con 'echo'.  
 echo json_encode($response);  
 ?>
