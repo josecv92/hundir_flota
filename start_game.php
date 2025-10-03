@@ -36,30 +36,32 @@
 // Y una bandera para saber si la posición es válida.  
         $isValidPlacement = true;  
         echo $startCol, $startRow;
-// Inicia un bucle 'for' que se repita tantas veces como el tamaño del barco  ('$shipInfo['size']').  
-        for ($i = 0; $i < $shipInfo['size']; $i++) { 
-// Calcula la coordenada actual (row, col) basándote en la orientación. 
-            if ($orientation == 0){
-                $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
-                $shipInfo['positions'].array_push($temporaryPositions);
-                $startCol++;
-            }else{
-                $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
-                $shipInfo['positions'].array_push($temporaryPositions);
-                $startRow++;
-            } 
-// COMPROBACIÓN 1: ¿La casilla está fuera del tablero?  
-// COMPROBACIÓN 2: ¿La casilla ya está en '$occupiedCoordinates'? // Si  alguna de las dos es cierta, la posición no es válida. // 
-            for ($i = 0; $i <= sizeof($occupiedCoordinates); $i++){
-                if ($shipCoordinates['positions'.'row'] )
+// Inicia un bucle 'for' que se repita tantas veces como el tamaño del barco  ('$shipInfo['size']'). 
             
-                $occupiedCoordinates.array_push($shipInfo['positions']);
+        for ($i = 0; $i < $shipInfo['size']; $i++) { 
+            if ($orientation == 0){
+                if ($occupiedCoordinates[$startCol][$startRow+$i] == 1) $isValidPlacement = false;  
+            }else{
+                if($occupiedCoordinates[$startCol+$i][$startRow] == 1) $isValidPlacement = false; 
             }
-            $isValidPlacement = false;  
-            break;
-// Rompe el bucle 'for' con 'break;'.  
-// Si la casilla es válida, guárdala en '$shipCoordinates'.
-        }  
+        }
+        if ( $isValidPlacement){
+            for ($i = 0; $i < $shipInfo['size']; $i++) { 
+                    if ($orientation == 0){
+                        $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
+                        $shipInfo['positions'].array_push($temporaryPositions);
+                        $startCol++;
+                    }else{
+                        $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
+                        $shipInfo['positions'].array_push($temporaryPositions);
+                        $startRow++;
+                    } 
+                    $occupiedCoordinates[$startCol][$startRow] = 1;
+            }  
+            $isPlaced = true;
+        }
+      
+
 // PASO 8: Colocar el barco si la validación fue exitosa.  
 // Si '$isValidPlacement' sigue siendo 'true'...  
 // if ($isValidPlacement) {  
