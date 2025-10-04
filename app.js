@@ -29,8 +29,13 @@ async function startGame() {
 
 		gameState.boardSize = data.boardSize;
 		gameState.fleet = data.fleet;
+
+		console.log({ gameState }, 0);
+
 		renderBoard();
 		renderFleetStatus();
+
+		console.log({ flota: gameState.fleet });
 
 		// Muestra un mensaje de inicio.
 		// messageArea.textContent = '...';
@@ -41,6 +46,7 @@ async function startGame() {
 
 // --- PASO 4: RENDERIZADO DE LA INTERFAZ ---
 function renderBoard() {
+	return;
 	gameBoard.innerHTML = "";
 	// Ajusta el estilo CSS 'grid-template-columns' del tablero para que coincida con 'boardSize'.
 	gameBoard.style.gridTemplateColumns = `repeat(${gameState.boardSize}, 40px)`;
@@ -62,9 +68,14 @@ function renderBoard() {
 		}
 	}
 }
-// Crea la función 'renderFleetStatus' que muestra la lista de barcos.
+
 function renderFleetStatus() {
 	// Recorre 'gameState.fleet' y por cada barco, crea un '<li>' y añádelo a 'fleetStatusEl'.
+	gameState.fleet.forEach((ship) => {
+		const li = document.createElement("li");
+		li.innerHTML = `${ship.name}  (${ship.size} casillas)`;
+		fleetStatus.appendChild(li);
+	});
 }
 
 // --- PASO 5: LÓGICA DE DISPARO ---
