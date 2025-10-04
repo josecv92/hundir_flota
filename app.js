@@ -80,15 +80,24 @@ function renderFleetStatus() {
 
 // --- PASO 5: LÓGICA DE DISPARO ---
 // Crea la función 'handleCellClick' que se ejecuta al hacer clic en una celda.
+
 function handleCellClick(event) {
-	// Comprueba si el juego ha terminado o si la celda ya ha sido disparada. Si es así, sal de la función con 'return'.
-	// Marca la celda como 'disparada' usando 'dataset'.
 	const cell = event.target;
+
+	if (cell.dataset.fired === "true" || gameState.isGameOver === true) {
+		return;
+	}
+
+	// Marca la celda como 'disparada' usando 'dataset'.
 	cell.dataset.fired = "true";
+
 	// Incrementa el contador de disparos y actualiza el HTML.
+	gameState.shotsFired++;
+
 	// ¡OJO! Convierte las coordenadas del 'dataset' (que son string) a número usando parseInt().
 	const row = parseInt(cell.dataset.row);
-	const col = "???";
+	const col = parseInt(cell.dataset.col);
+
 	// Busca si el disparo ha acertado en algún barco.
 	// Usa un 'forEach' o 'findIndex' en 'gameState.fleet' para comprobar si las coordenadas coinciden.
 	// Si ha acertado ('hit')...
