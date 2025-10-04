@@ -46,23 +46,23 @@ async function startGame() {
 
 // --- PASO 4: RENDERIZADO DE LA INTERFAZ ---
 function renderBoard() {
-	return;
 	gameBoard.innerHTML = "";
 	// Ajusta el estilo CSS 'grid-template-columns' del tablero para que coincida con 'boardSize'.
 	gameBoard.style.gridTemplateColumns = `repeat(${gameState.boardSize}, 40px)`;
+
 	// Usa dos bucles 'for' anidados (uno para filas, otro para columnas) para crear cada celda.
 	for (let row = 0; row < gameState.boardSize; row++) {
 		for (let col = 0; col < gameState.boardSize; col++) {
 			// Crea un elemento 'div' para la celda.
-			const cell = "???"; // ...;
+			const cell = document.createElement("div");
 			// Añádele la clase 'cell'.
-			cell.classList.add("???");
+			cell.classList.add("cell");
 			// Guarda sus coordenadas usando 'dataset'. ¡MUY IMPORTANTE!
 			cell.dataset.row = row;
 			cell.dataset.col = col;
 			// Añade un 'event listener' para que reaccione al evento 'click'.
 			// Este evento debe llamar a la función 'handleCellClick'.
-			//cell.addEventListener(...);
+			cell.addEventListener("click", handleCellClick);
 			// Añade la celda al tablero.
 			gameBoard.appendChild(cell);
 		}
