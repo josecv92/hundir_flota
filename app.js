@@ -142,8 +142,6 @@ cell.addEventListener ("click" , increaseCounter )
  
 // --- PASO 6: FIN DEL JUEGO Y PUNTUACIONES ---
 // Crea la función 'endGame' que muestra el modal de victoria.
-
-
 // function endGame() { ... }
 function endGame(){
    gameOverModal.style.display("block");
