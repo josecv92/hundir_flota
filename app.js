@@ -100,12 +100,13 @@ function handleCellClick(event) {
 
 	// Busca si el disparo ha acertado en algún barco.
 	// Usa un 'forEach' o 'findIndex' en 'gameState.fleet' para comprobar si las coordenadas coinciden.
+
 	// Si ha acertado ('hit')...
 	// Añade la clase 'tocado' a la celda.
 	// Incrementa el contador de aciertos ('hits') del barco correspondiente.
 	// Comprueba si el barco está hundido (si 'hits' es igual a 'size').
 	// Si está hundido...
-	// Marca el barco como 'isSunk = true'.
+	// Marca el barco como ' = true'.
 	// Incrementa el contador de barcos hundidos.
 	// Actualiza los estilos de todas las casillas de ese barco a 'hundido'.
 	// Actualiza el estilo en la lista de la flota.
@@ -113,6 +114,21 @@ function handleCellClick(event) {
 	// Si es así, llama a la función 'endGame()'.
 	// Si no ha acertado ('miss')...
 	// Añade la clase 'agua' a la celda.
+
+	const shipHit = gameState.fleet.findIndex((ship) =>
+		ship.positions.some((pos) => pos.row === row && pos.col === col)
+	);
+
+	if (shipHit !== -1) {
+		const ship = gameState.fleet[shipHit];
+		ship.classList.add(todado);
+		ship.hits++;
+	}
+
+	if (shipHit === shipHit.size) {
+		ship = true;
+		ship.classList.add("hundido");
+	}
 }
 
 // --- PASO 6: FIN DEL JUEGO Y PUNTUACIONES ---
