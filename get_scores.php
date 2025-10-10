@@ -9,7 +9,8 @@ $scoresFile = 'scores.json';
 $scores = [];  
 // Si el archivo $scoresFile existe, léelo y decodifícalo a PHP. // 
 if (file_exists($scoresFile)) { 
-
+    $stringScore = file_get_contents($scoresFile);
+    $scores = json_decode($stringScore, true);
  }  
 // PASO 4: Enviar las puntuaciones como JSON.  
 echo json_encode($scores);  
