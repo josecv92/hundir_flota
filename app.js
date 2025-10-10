@@ -1,146 +1,223 @@
+// ============== GUÍA PARA EL FRONT-END ==============
+
 // --- PASO 1: SELECCIÓN DE ELEMENTOS DEL DOM ---
-const gameBoard = document.getElementById("game-board");
-const messageArea = document.getElementById("message-area");
-const shotCounter = document.getElementById("shot-counter");
-const fleetStatus = document.getElementById("fleet-status");
-const gameOverModal = document.getElementById("game-over-modal");
-const modalTitle = document.getElementById("modal-title");
-const modalText = document.getElementById("modal-text");
-const playerNameInput = document.getElementById("player-name").value;
-const saveScoreBtn = document.getElementById("save-score-btn");
-const scoreList = document.getElementById("score-list");
-const counterShot = document.getElementById("shot-counter");
+
+// Guarda en constantes los elementos del HTML que vas a necesitar manipular.
+// Usa document.getElementById() o document.querySelector().
+
+const gameBoard = document.getElementById("game-board") ;
+ const messageArea = document.getElementById("message-area");
+const shotCounter = document.getElementById("shot-counter")
+const fleetStatus = document.getElementById("fleet-status")
+const gameOverModal = document.getElementById("game-over-modal")
+const modalTitle = document.getElementById("modal-title")
+const modalText = document.getElementById("modal-text")
+const playerNameInput = document.getElementById("player-name").value
+const saveScoreBtn = document.getElementById("save-score-btn")
+const scoreList = document.getElementById("score-list")
+const counterShot = document.getElementById("shot-counter")
+ console.log(messageArea)
+
 
 // --- PASO 2: DEFINICIÓN DEL ESTADO DEL JUEGO ---
-let gameState = {
-	boardSize: 0,
-	fleet: [], // Aquí guardaremos la información de la flota enemiga.
-	shotsFired: 0,
-	shipsSunk: 0,
-	isGameOver: false,
-};
+
+// Crea un objeto 'gameState' para almacenar toda la información de la partida.
+ let gameState = {
+ boardSize: 0,
+ fleet: [], // Aquí guardaremos la información de la flota enemiga.
+ shotsFired: 0,
+ shipsSunk: 0,
+ isGameOver: false
+ };
 
 // --- PASO 3: INICIO DEL JUEGO ---
-async function startGame() {
-	try {
-		// Realiza una petición 'fetch' a tu 'start_game.php'.
-		const response = await fetch("info.json");
-		const data = await response.json();
 
-		gameState.boardSize = data.boardSize;
-		gameState.fleet = data.fleet;
+// Crea una función asíncrona 'startGame' que se ejecutará al cargar la página.
 
-		console.log({ gameState }, 0);
+ async function startGame() {
+// Usa un bloque 'try...catch' para manejar errores si el servidor no responde.
+ try {
+// Realiza una petición 'fetch' a tu 'start_game.php'.
 
-		renderBoard();
-		renderFleetStatus();
+const  responseTest = await fetch("info.json")
 
-		console.log({ flota: gameState.fleet });
+const data = await responseTest.json()
 
-		// Muestra un mensaje de inicio.
-		// messageArea.textContent = '...';
-	} catch (error) {
-		//Muestra un mensaje de error si la petición falla.
-	}
-}
+console.log(data)
+
+  // const response = await fetch('start_game.php');  usar esta al llamar al php
+// Convierte la respuesta a JSON.
+ // const data = await response.json();
+// Actualiza el 'gameState' con los datos recibidos del servidor.
+
+ gameState.boardSize = data.boardSize;
+ gameState.fleet = data.fleet;
+// Llama a las funciones que se encargan de "dibujar" la interfaz.
+
+// Muestra un mensaje de inicio.
+ messageArea.textContent = 'Bienvenido/a al juego de undir la flota';
+ } catch (error) {
+    console.error("Error fetching API data:", error);
+ }
+ }
 
 // --- PASO 4: RENDERIZADO DE LA INTERFAZ ---
-function renderBoard() {
-	gameBoard.innerHTML = "";
-	// Ajusta el estilo CSS 'grid-template-columns' del tablero para que coincida con 'boardSize'.
-	gameBoard.style.gridTemplateColumns = `repeat(${gameState.boardSize}, 40px)`;
 
-	// Usa dos bucles 'for' anidados (uno para filas, otro para columnas) para crear cada celda.
-	for (let row = 0; row < gameState.boardSize; row++) {
-		for (let col = 0; col < gameState.boardSize; col++) {
-			// Crea un elemento 'div' para la celda.
-			const cell = document.createElement("div");
-			// Añádele la clase 'cell'.
-			cell.classList.add("cell");
-			// Guarda sus coordenadas usando 'dataset'. ¡MUY IMPORTANTE!
-			cell.dataset.row = row;
-			cell.dataset.col = col;
-			// Añade un 'event listener' para que reaccione al evento 'click'.
-			// Este evento debe llamar a la función 'handleCellClick'.
-			cell.addEventListener("click", handleCellClick);
-			// Añade la celda al tablero.
-			gameBoard.appendChild(cell);
-		}
-	}
+// Crea la función 'renderBoard' que genera el tablero.
+ function renderBoard() {
+// Limpia el tablero por si había algo antes.
+ gameBoard.innerHTML = '';
+// Ajusta el estilo CSS 'grid-template-columns' del tablero para que coincida con 'boardSize'.
+  gameBoard.style.gridTemplateColumns = `repeat(${gameState.boardSize}, 40px)`;
+// Usa dos bucles 'for' anidados (uno para filas, otro para columnas) para crear cada celda.
+ for (let row = 0; row < gameState.boardSize; row++) {
+ for (let col = 0; col < gameState.boardSize; col++) {
+// Crea un elemento 'div' para la celda.
+ const cell = document.createElement("div");
+// Añádele la clase 'cell'.
+ cell.classList.add('cell');
+// Guarda sus coordenadas usando 'dataset'. ¡MUY IMPORTANTE!
+ cell.dataset.row = row;
+ cell.dataset.col = col;
+// Añade un 'event listener' para que reaccione al evento 'click'.
+// Este evento debe llamar a la función 'handleCellClick'.
+ cell.addEventListener(handleCellClick())
+// Añade la celda al tablero.
+ gameBoard.appendChild(cell);
+ }
+ }
+ }
+// Crea la función 'renderFleetStatus' que muestra la lista de barcos.
+ function renderFleetStatus() {
+// Recorre 'gameState.fleet' y por cada barco, crea un '<li>' y añádelo a 'fleetStatusEl'.
+   gameState.fleet.forEach(function (casilla) {
+       casilla.document.createElement("li")
+   })
 }
 
-function renderFleetStatus() {
-	// Recorre 'gameState.fleet' y por cada barco, crea un '<li>' y añádelo a 'fleetStatusEl'.
-	gameState.fleet.forEach((ship) => {
-		const li = document.createElement("li");
-		li.innerHTML = `${ship.name}  (${ship.size} casillas)`;
-		fleetStatus.appendChild(li);
-	});
-}
-
+renderBoard();
+renderFleetStatus();
 // --- PASO 5: LÓGICA DE DISPARO ---
+
 // Crea la función 'handleCellClick' que se ejecuta al hacer clic en una celda.
+ function handleCellClick(event) {}
+// Comprueba si el juego ha terminado o si la celda ya ha sido disparada. Si es así, sal de la función con 'return'.
+// Marca la celda como 'disparada' usando 'dataset'.
+ const cell = event.target;
+ cell.dataset.fired = 'true';
 
-function handleCellClick(event) {
-	const cell = event.target;
+// Incrementa el contador de disparos y actualiza el HTML.
 
-	if (cell.dataset.fired === "true" || gameState.isGameOver === true) {
-		return;
-	}
-
-	// Marca la celda como 'disparada' usando 'dataset'.
-	cell.dataset.fired = "true";
-
-	// Incrementa el contador de disparos y actualiza el HTML.
-	gameState.shotsFired++;
-
-	// ¡OJO! Convierte las coordenadas del 'dataset' (que son string) a número usando parseInt().
-	const row = parseInt(cell.dataset.row);
-	const col = parseInt(cell.dataset.col);
-
-	// Busca si el disparo ha acertado en algún barco.
-	// Usa un 'forEach' o 'findIndex' en 'gameState.fleet' para comprobar si las coordenadas coinciden.
-
-	// Si ha acertado ('hit')...
-	// Añade la clase 'tocado' a la celda.
-	// Incrementa el contador de aciertos ('hits') del barco correspondiente.
-	// Comprueba si el barco está hundido (si 'hits' es igual a 'size').
-	// Si está hundido...
-	// Marca el barco como ' = true'.
-	// Incrementa el contador de barcos hundidos.
-	// Actualiza los estilos de todas las casillas de ese barco a 'hundido'.
-	// Actualiza el estilo en la lista de la flota.
-	// Comprueba si todos los barcos han sido hundidos (fin del juego).
-	// Si es así, llama a la función 'endGame()'.
-	// Si no ha acertado ('miss')...
-	// Añade la clase 'agua' a la celda.
-
-	const shipHit = gameState.fleet.findIndex((ship) =>
-		ship.positions.some((pos) => pos.row === row && pos.col === col)
-	);
-
-	if (shipHit !== -1) {
-		const ship = gameState.fleet[shipHit];
-		ship.classList.add(todado);
-		ship.hits++;
-	}
-
-	if (shipHit === shipHit.size) {
-		ship = true;
-		ship.classList.add("hundido");
-	}
+const increaseCounter = (counterShot, counter = 0) => {
+   if(cell) {
+      counterShot.innerHTML = "";
+      return counterShot.innerHTML =  `<b> ${counter++} </b>`
+   }
 }
 
+cell.addEventListener ("click" , increaseCounter )
+
+// ¡OJO! Convierte las coordenadas del 'dataset' (que son string) a número usando parseInt().
+ const row = parseInt(cell.dataset.row);
+ const col = parseInt(cell.dataset.col)
+// Busca si el disparo ha acertado en algún barco.
+// Usa un 'forEach' o 'findIndex' en 'gameState.fleet' para comprobar si las coordenadas coinciden.
+
+gameState.fleet.forEach(() => {
+  if(e) {
+     
+  }
+})
+
+// Si ha acertado ('hit')...
+// Añade la clase 'tocado' a la celda.
+// Incrementa el contador de aciertos ('hits') del barco correspondiente.
+gameState.fleet.forEach((hits)   => {
+  boat.hits = hits++
+ })
+
+// Comprueba si el barco está hundido (si 'hits' es igual a 'size').
+// Si está hundido...
+
+
+// Marca el barco como 'isSunk = true'.
+// Incrementa el contador de barcos hundidos.
+// Actualiza los estilos de todas las casillas de ese barco a 'hundido'.
+
+if(boat.hits === boat.boardSize) {
+   boat.isSunk = true;
+   shipsSunk++
+   boat.forEach((position) => {
+      if (position[0] !== row || position[1] !== col) {
+          position.classList.add("hundido");
+      }
+  });
+}
+
+// Actualiza el estilo en la lista de la flota.
+
+// Comprueba si todos los barcos han sido hundidos (fin del juego).
+// Si es así, llama a la función 'endGame()'.
+// Si no ha acertado ('miss')...
+// Añade la clase 'agua' a la celda.
+
+const li = document.createElement("li")
+fleetStatus.appendChild(li)
+li.style.backgroundColor = "red"
+
+if(!boat) {
+   endGame();
+}
+
+boat.forEach((position) => {
+   if (position[0] !== row || position[1] !== col) {
+       position.classList.add("miss");
+   }
+});
 // --- PASO 6: FIN DEL JUEGO Y PUNTUACIONES ---
 // Crea la función 'endGame' que muestra el modal de victoria.
-function endGame() {}
-
+// function endGame() { ... }
+function endGame(){
+   gameOverModal.style.display("block");
+}
 // Añade el 'event listener' al botón de guardar puntuación.
 // Este debe hacer una petición 'fetch' con método 'POST' a 'save_score.php'.
 // saveScoreBtn.addEventListener(...);
+saveScoreBtn.addEventListener(click, function(){
+   fetch('save_score.php', {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({ nombre: playerNameInput, puntuacion: shotCounter })
+    }).catch(error => {
+      console.error('Error al enviar los datos:', error);
+    });
+    loadScores();
+})
 
 // Crea la función 'loadScores' que pide el ranking a 'get_scores.php' y lo muestra en el HTML.
-async function loadScores() {}
+// async function loadScores() { ... }
+async function loadScores(){
+   const response = await fetch('get_scores.php');
+   if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+   else{
+      const result = await response.json();
+      for (let i = 0; i < 5; i++) {
+        let nombre = result[i].nombre;
+        let puntos = result[i].puntuacion;
+        let nuevoRegistro = document.createElement("li");
+        nuevoRegistro.textContent = nombre + " - " + puntos + "disparos.";
+        scoreList.appendChild(nuevoRegistro);
+      }
+   }
+    
+}
+
+
+// --- INVOCACIÓN INICIAL ---
 
 startGame();
 loadScores();
