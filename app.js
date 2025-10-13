@@ -37,6 +37,13 @@ let gameState = {
         const response = await fetch("start_game.php");
         // Convierte la respuesta a JSON.
         const data = await response.json();
+
+        data.ships.forEach(ship => {
+            ship.positions.forEach(pos => {
+                pos.row--; 
+                pos.col--;
+            });
+        });
         // Actualiza el 'gameState' con los datos recibidos del servidor.
         gameState.boardSize = data.boardSize;
         gameState.fleet = data.ships; 
