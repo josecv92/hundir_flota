@@ -43,14 +43,23 @@ El objetivo del proyecto es recrear el juego de forma interactiva, con registro 
 ## Estructura del proyecto
 
 /hundir-la-flota
+
 │
+
 ├── index.html
+
 ├── style.css
+
 ├── app.js
+
 ├── start_game.php
+
 ├── save_score.php
+
 ├── get_scores.php
+
 ├── scores.json
+
 └── README.md
 
 ---
