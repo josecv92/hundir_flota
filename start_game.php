@@ -47,10 +47,10 @@
             
         for ($i = 0; $i < $shipInfo['size']; $i++) { 
             if ($orientation == 0){
-                if (isset($occupiedCoordinates[$startCol][$startRow+$i]) && $occupiedCoordinates[$startCol][$startRow+$i] == 1)
+                if (isset($occupiedCoordinates[$startCol+$i][$startRow]) && $occupiedCoordinates[$startCol+$i][$startRow] == 1)
                      $isValidPlacement = false;  
             }else{
-                if(isset($occupiedCoordinates[$startCol+$i][$startRow]) && $occupiedCoordinates[$startCol+$i][$startRow] == 1)
+                if(isset($occupiedCoordinates[$startCol][$startRow+$i]) && $occupiedCoordinates[$startCol][$startRow+$i] == 1)
                      $isValidPlacement = false; 
             }
         }
