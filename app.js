@@ -142,7 +142,7 @@ function handleCellClick(event) {
          if (pos.row === row && pos.col === col) {
             // Si ha acertado ('hit')...
             hit = true;
-            messageArea.textContent = "Tocado.";
+            messageArea.textContent = "Tocado";
             // Añade la clase 'tocado' a la celda.  gameState.fleet.forEach((ship) => {
             cell.classList.add("tocado");
 
@@ -154,7 +154,7 @@ function handleCellClick(event) {
                // Si está hundido...
                // Marca el barco como 'isSunk = true'.
                ship.sunk = true;
-               messageArea.textContent = "Hundido.";
+               messageArea.textContent = "Hundido";
                // Incrementa el contador de barcos hundidos.
                gameState.shipsSunk++;
 
@@ -168,7 +168,7 @@ function handleCellClick(event) {
    // Añade la clase 'agua' a la celda.  if (!hit) {
    if(!hit){
       cell.classList.add("agua");
-      messageArea.textContent = "Agua.";
+      messageArea.textContent = "Agua";
    }
 
    // Comprueba si todos los barcos han sido hundidos (fin del juego).
