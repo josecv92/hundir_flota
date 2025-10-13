@@ -32,15 +32,15 @@ El objetivo del proyecto es recrear el juego de forma interactiva, con registro 
 
 | Rol | Nombre | Responsabilidades |
 |-----|---------|------------------|
-| **Scrum Master** | _[José Calvo]_ | Coordinación del equipo, organización de tareas, control de entregas y documentación |
-| **Front-end Developer** | _[Ibai Amaya / César García]_ | Maquetación y estilos del juego en HTML y CSS |
-| **Front-end Developer** | _[César García / Ibai Amaya]_ | Lógica del juego e interactividad en JavaScript |
-| **Back-end Developer** | _[Andrea Pradas / José Calvo]_ | Desarrollo del flujo del juego en PHP y conexión con JSON |
-| **Back-end Developer** | _[Andrea Pradas]_ | Gestión de puntuaciones y comunicación con el front-end |
+| **Scrum Master** | _José Calvo_ | Coordinación del equipo, organización de tareas, control de entregas y documentación |
+| **Front-end Developer** | _Ibai Amaya / César García_ | Maquetación y estilos del juego en HTML y CSS |
+| **Front-end Developer** | _César García / Ibai Amaya_ | Lógica del juego e interactividad en JavaScript |
+| **Back-end Developer** | _Andrea Pradas / José Calvo_ | Desarrollo del flujo del juego en PHP y conexión con JSON |
+| **Back-end Developer** | _Andrea Pradas_ | Gestión de puntuaciones y comunicación con el front-end |
 
 ---
 
-## 🗂️ Estructura del proyecto
+## Estructura del proyecto
 
 /hundir-la-flota
 │
@@ -55,14 +55,14 @@ El objetivo del proyecto es recrear el juego de forma interactiva, con registro 
 
 ---
 
-##  Metodología de trabajo
+## Metodología de trabajo
 
 El desarrollo se ha llevado a cabo siguiendo la metodología **Scrum**, con una división clara entre front-end y back-end.  
 El equipo realizó reuniones de seguimiento, revisiones de código y pruebas antes de la entrega final.
 
 ---
 
-##  Ejecución del proyecto
+## Ejecución del proyecto
 
 1. Clonar o descargar el repositorio del proyecto.  
 2. Colocar los archivos en el directorio `htdocs` de **XAMPP** (u otro servidor local con soporte PHP).  
@@ -71,7 +71,7 @@ El equipo realizó reuniones de seguimiento, revisiones de código y pruebas ant
 
 ---
 
-## 🏁 Estado del proyecto
+## Estado del proyecto
 
 **Finalizado**  
 El juego funciona correctamente con guardado de puntuaciones, turnos dinámicos y una interfaz visual completa.
