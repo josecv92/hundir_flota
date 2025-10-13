@@ -30,47 +30,26 @@ let gameState = {
 
 // Crea una función asíncrona 'startGame' que se ejecutará al cargar la página.
 
-async function startGame() {
+  async function startGame() {
    // Usa un bloque 'try...catch' para manejar errores si el servidor no responde.
-   try {
-      // Realiza una petición 'fetch' a tu 'start_game.php'.
-      const response = await fetch("start_game.php");
-      if (!response.ok) {
-         throw new Error("Error del servidor: ${response.status}");
-      }
-      // Convierte la respuesta a JSON.
-      const data = await response.json();
-      // Actualiza el 'gameState' con los datos recibidos del servidor.
-      gameState.boardSize = Number(data.boardSize) || 10;
-      gameState.fleet = data.ships;
-      gameState.fleet.forEach(ship => {
-         ship.size = Number(ship.size) || (Array.isArray(ship.positions) ? ship.positions.length : 0);
+    try {
+        // Realiza una petición 'fetch' a tu 'start_game.php'.
+        const response = await fetch("start_game.php");
+        // Convierte la respuesta a JSON.
+        const data = await response.json();
+        // Actualiza el 'gameState' con los datos recibidos del servidor.
+        gameState.boardSize = data.boardSize;
+        gameState.fleet = data.ships; 
 
-         if (!Array.isArray(ship.positions)) ship.positions = [];
-            ship.positions = ship.positions.map(p => {
-            const r = Number(p.row);
-            const c = Number(p.col);
-            return {
-               row: (r > 0 ? r - 1 : r),
-               col: (c > 0 ? c - 1 : c)
-            };
-         });
-         ship.hits = 0;
-         ship.sunk = false;
-      });
-
-      // Llama a las funciones que se encargan de "dibujar" la interfaz.
-      renderBoard();
-      renderFleetStatus();
-
-      // Muestra un mensaje de inicio.
-      messageArea.textContent = "¡El juego ha comenzado!";
-  } 
-  catch (error) {
-    console.error("Error al iniciar el juego:", error);
-  }
+        // Llama a las funciones que se encargan de "dibujar" la interfaz.
+        renderBoard();
+        renderFleetStatus();
+        // Muestra un mensaje de inicio.
+        messageArea.textContent = "¡El juego ha comenzado!";
+    } catch (error) {
+        console.error("Error fetching API data:", error);
+    }
 }
-
 // --- PASO 4: RENDERIZADO DE LA INTERFAZ ---
 
 // Crea la función 'renderBoard' que genera el tablero.
