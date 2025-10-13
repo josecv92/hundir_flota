@@ -27,9 +27,16 @@
 // PASO 6: Generar una posición y orientación aleatorias.  
 // Elige si el barco será 'horizontal' o 'vertical'.  
         $orientation = rand(0, 1);  
-// Elige una fila y columna de inicio aleatorias dentro del tablero. Usa rand().  
-        $startRow = rand(1, (10 - $shipInfo['size'] + 1)); 
-        $startCol = rand(1, (10 - $shipInfo['size'] + 1)); 
+// Elige una fila y columna de inicio aleatorias dentro del tablero. Usa rand(). 
+        if ($orientation === 0){
+            $startRow = rand(1, 10);
+            $startCol = rand(1, (10 - $shipInfo['size'] + 1));
+        }else {
+            $startRow = rand(1, (10 - $shipInfo['size'] + 1));
+            $startCol = rand(1, 10);
+        }
+         
+         
 // PASO 7: Validar la posición del barco.  
 // Prepara un array para guardar las coordenadas del barco actual. // 
         $shipCoordinates = [];  
