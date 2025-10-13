@@ -57,10 +57,10 @@
         if ( $isValidPlacement){
             for ($i = 0; $i < $shipInfo['size']; $i++) { 
                     if ($orientation == 0){
-                       if($i!=0) $startRow++;
+                       if($i!=0) $startCol++;
                         
                     }else{
-                       if($i!=0) $startCol++;
+                       if($i!=0) $startRow++;
                     } 
                     $temporaryPositions = ["col"=> $startCol, "row"=> $startRow];
                     array_push($shipInfo['positions'], $temporaryPositions);
